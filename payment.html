@@ -77,8 +77,12 @@
   <main>
     <form id="paymentForm">
 
-      <label for="confirmBooking">تأكيد رقم الحجز:</label>
-      <input type="text" id="confirmBooking" maxlength="6" pattern="\\d{6}" required />
+      <label for="confirmBooking">تأكيد رقم الحجز (6 أرقام):</label>
+      <input type="text" id="confirmBooking" minlength="6" maxlength="6" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+
+      <p id="lengthError" class="error-message">
+        ❗ رقم الحجز يجب أن يتكون من 6 أرقام فقط.
+      </p>
 
       <label for="cardNumber">رقم البطاقة:</label>
       <input type="text" id="cardNumber" maxlength="16" pattern="\\d{16}" required />
@@ -126,14 +130,23 @@
     document.getElementById("paymentForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
+      const confirmBooking = document.getElementById("confirmBooking").value;
+      const lengthError = document.getElementById("lengthError");
+      const dateError = document.getElementById("dateError");
+
+      lengthError.style.display = "none";
+      dateError.style.display = "none";
+
+      if (confirmBooking.length !== 6) {
+        lengthError.style.display = "block";
+        return;
+      }
+
       const month = parseInt(document.getElementById("expiryMonth").value);
       const year = parseInt(document.getElementById("expiryYear").value);
-      const errorMsg = document.getElementById("dateError");
-
-      errorMsg.style.display = "none";
 
       if (year < 2025 || (year === 2025 && month < 7)) {
-        errorMsg.style.display = "block";
+        dateError.style.display = "block";
         return;
       }
 
