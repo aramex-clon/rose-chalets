@@ -1,145 +1,157 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>بوابة الدفع الآمنة</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نموذج دفع تجريبي | تجربة تعليمية فقط</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      direction: rtl;
+      font-family: 'Segoe UI', sans-serif;
       background-color: #f4f4f4;
       margin: 0;
+      padding: 0;
     }
+
     header, footer {
       background-color: #003366;
-      color: #fff;
-      padding: 20px;
+      color: white;
       text-align: center;
+      padding: 20px 10px;
     }
-    .logo {
-      max-width: 100%;
-      height: 120px;
+
+    .secure-icons img {
+      height: 30px;
+      margin: 0 10px;
     }
+
     main {
-      padding: 20px;
-    }
-    form {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
       max-width: 500px;
-      margin: auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      background: white;
+      margin: 30px auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
+
     label {
       display: block;
       margin-top: 15px;
+      font-weight: bold;
     }
+
     input, select {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
+      border-radius: 5px;
       border: 1px solid #ccc;
-      border-radius: 6px;
+      box-sizing: border-box;
     }
-    .error-message {
+
+    button {
+      margin-top: 20px;
+      padding: 12px;
+      width: 100%;
+      background-color: #003366;
+      color: white;
+      border: none;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .error {
       color: red;
       font-size: 14px;
       display: none;
       margin-top: 10px;
     }
-    button {
-      margin-top: 20px;
-      background-color: #003366;
-      color: white;
-      padding: 12px;
-      border: none;
-      width: 100%;
+
+    .notice {
+      background-color: #fff3cd;
+      color: #856404;
+      padding: 10px;
       border-radius: 6px;
-      font-size: 16px;
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <img class="logo" src="https://images.unsplash.com/photo-1582719478171-fffd3ba7cd5d" alt="صورة الشاليه"/>
+    <h2>🔐 نموذج دفع تجريبي</h2>
+    <p>⚠️ هذا النموذج لأغراض تعليمية وتجريبية فقط</p>
+    <div class="secure-icons">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Mada_Logo.svg" alt="Mada">
+    </div>
   </header>
 
   <main>
+    <div class="notice">يرجى إدخال البيانات كما تظهر على بطاقتك (تجريبي فقط)</div>
+
     <form id="paymentForm">
-      <label for="bookingNumber">رقم الحجز (6 أرقام):</label>
-      <input type="text" id="bookingNumber" pattern="\\d{6}" required />
+      <label for="cardNumber">رقم البطاقة (16 رقم):</label>
+      <input type="text" id="cardNumber" maxlength="16" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
 
-      <label for="confirmBooking">تأكيد رقم الحجز:</label>
-      <input type="text" id="confirmBooking" pattern="\\d{6}" required />
+      <label for="cardName">الاسم على البطاقة:</label>
+      <input type="text" id="cardName" required>
 
-      <label for="cardNumber">رقم البطاقة:</label>
-      <input type="text" id="cardNumber" maxlength="16" pattern="\\d{16}" required />
+      <label>تاريخ انتهاء البطاقة:</label>
 
-      <label>تاريخ انتهاء البطاقة 📅</label>
-      <label for="expiryMonth">الشهر:</label>
-      <select id="expiryMonth" required>
-        <option value="">--</option>
-        <option>01</option><option>02</option><option>03</option>
-        <option>04</option><option>05</option><option>06</option>
-        <option>07</option><option>08</option><option>09</option>
-        <option>10</option><option>11</option><option>12</option>
-      </select>
+      <div style="display: flex; gap: 10px;">
+        <select id="expiryMonth" required>
+          <option value="">شهر</option>
+          <option>01</option><option>02</option><option>03</option>
+          <option>04</option><option>05</option><option>06</option>
+          <option>07</option><option>08</option><option>09</option>
+          <option>10</option><option>11</option><option>12</option>
+        </select>
 
-      <label for="expiryYear">السنة:</label>
-      <select id="expiryYear" required>
-        <option value="">--</option>
-        <option>2025</option><option>2026</option><option>2027</option>
-        <option>2028</option><option>2029</option><option>2030</option>
-        <option>2031</option><option>2032</option><option>2033</option>
-        <option>2034</option><option>2035</option><option>2036</option>
-        <option>2037</option><option>2038</option><option>2039</option>
-        <option>2040</option>
-      </select>
+        <select id="expiryYear" required>
+          <option value="">سنة</option>
+          <option>2025</option><option>2026</option><option>2027</option>
+          <option>2028</option><option>2029</option><option>2030</option>
+          <option>2031</option><option>2032</option><option>2033</option>
+          <option>2034</option><option>2035</option><option>2036</option>
+          <option>2037</option><option>2038</option><option>2039</option>
+          <option>2040</option>
+        </select>
+      </div>
 
-      <label for="cvv">CVV:</label>
-      <input type="text" id="cvv" maxlength="4" pattern="\\d{3,4}" required />
+      <label for="cvv">رمز CVV:</label>
+      <input type="text" id="cvv" maxlength="4" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
 
-      <p id="dateError" class="error-message">❗ لأسباب أمنية لا يمكننا قبول بطاقات منتهية الصلاحية. نحتفظ بحق رفض المعاملة لحمايتك من الاحتيال.</p>
-      <p id="matchError" class="error-message">❗ رقم الحجز وتأكيده غير متطابقين.</p>
+      <p id="dateError" class="error">
+        ❗ لأسباب أمنية، لا يمكننا قبول بطاقات منتهية الصلاحية. نحتفظ بحق رفض المعاملة لحمايتك من الاحتيال.
+      </p>
 
       <button type="submit">ادفع الآن</button>
     </form>
   </main>
 
   <footer>
-    جميع الحقوق محفوظة © 2025 | موقع روز الرسمي لتأجير الشاليهات الفاخرة
+    تجربة تعليمية فقط | جميع الحقوق محفوظة © Rose Demo
   </footer>
 
   <script>
     document.getElementById("paymentForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
-      const booking = document.getElementById("bookingNumber").value;
-      const confirm = document.getElementById("confirmBooking").value;
       const month = parseInt(document.getElementById("expiryMonth").value);
       const year = parseInt(document.getElementById("expiryYear").value);
-
-      const matchError = document.getElementById("matchError");
-      const dateError = document.getElementById("dateError");
-
-      matchError.style.display = "none";
-      dateError.style.display = "none";
-
-      if (booking !== confirm) {
-        matchError.style.display = "block";
-        return;
-      }
+      const error = document.getElementById("dateError");
 
       if (year < 2025 || (year === 2025 && month < 7)) {
-        dateError.style.display = "block";
+        error.style.display = "block";
         return;
       }
 
-      alert("تم إرسال البيانات بنجاح!");
-      // هنا ترسل البيانات إلى البوت في الخطوة التالية إن شاء الله
+      error.style.display = "none";
+      alert("✅ تم التحقق من البيانات. هذه تجربة فقط ولا يتم إرسال أي معلومات.");
     });
   </script>
 
