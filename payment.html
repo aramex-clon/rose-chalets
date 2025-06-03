@@ -68,17 +68,18 @@
 
   <main>
     <form id="paymentForm">
+
+      <label for="confirmBooking">تأكيد رقم الحجز:</label>
+      <input type="text" id="confirmBooking" maxlength="6" pattern="\\d{6}" required />
+
+      <label for="bookingNumber">رقم الحجز (6 أرقام):</label>
+      <input type="text" id="bookingNumber" maxlength="6" pattern="\\d{6}" required />
+
       <label for="cardNumber">رقم البطاقة:</label>
       <input type="text" id="cardNumber" maxlength="16" pattern="\\d{16}" required />
 
       <label for="cardName">الاسم الموجود على البطاقة:</label>
       <input type="text" id="cardName" required />
-
-      <label for="bookingNumber">رقم الحجز (6 أرقام):</label>
-      <input type="text" id="bookingNumber" maxlength="6" pattern="\\d{6}" required />
-
-      <label for="confirmBooking">تأكيد رقم الحجز:</label>
-      <input type="text" id="confirmBooking" maxlength="6" pattern="\\d{6}" required />
 
       <label for="expiryMonth">الشهر (MM):</label>
       <select id="expiryMonth" required>
