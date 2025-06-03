@@ -84,8 +84,8 @@
         ❗ رقم الحجز يجب أن يتكون من 6 أرقام فقط.
       </p>
 
-      <label for="cardNumber">رقم البطاقة:</label>
-      <input type="text" id="cardNumber" maxlength="16" pattern="\\d{16}" required />
+      <label for="cardNumber">رقم البطاقة (مثل: 1234-5678-9012-3456):</label>
+      <input type="text" id="cardNumber" maxlength="19" required oninput="formatCardNumber(this)" />
 
       <label for="cardName">الاسم الموجود على البطاقة:</label>
       <input type="text" id="cardName" required />
@@ -127,6 +127,13 @@
   </footer>
 
   <script>
+    function formatCardNumber(input) {
+      let value = input.value.replace(/[^0-9]/g, ""); // إزالة غير الأرقام
+      value = value.slice(0, 16); // 16 رقم فقط
+      let formatted = value.match(/.{1,4}/g); // تقسيم كل 4
+      input.value = formatted ? formatted.join("-") : "";
+    }
+
     document.getElementById("paymentForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
