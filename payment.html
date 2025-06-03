@@ -18,9 +18,6 @@
       text-align: center;
       padding: 20px 0;
     }
-    .logo {
-      max-width: 150px;
-    }
     main {
       padding: 20px;
     }
@@ -58,12 +55,23 @@
       border-radius: 4px;
       font-size: 16px;
     }
+    .card-logos {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .card-logos img {
+      height: 50px;
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <img src="logo.png" alt="شعار البنك" class="logo" />
+    <div class="card-logos">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa Logo" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="MasterCard Logo" />
+    </div>
   </header>
 
   <main>
