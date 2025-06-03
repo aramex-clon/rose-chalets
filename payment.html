@@ -110,8 +110,8 @@
         <option>2040</option>
       </select>
 
-      <label for="cvv">CVV:</label>
-      <input type="text" id="cvv" maxlength="4" pattern="\\d{3,4}" required />
+      <label for="cvv">CVV (3 أرقام):</label>
+      <input type="text" id="cvv" minlength="3" maxlength="3" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
 
       <p id="dateError" class="error-message">
         ❗ لأسباب أمنية، لا يمكننا قبول بطاقات منتهية الصلاحية.  
@@ -128,9 +128,9 @@
 
   <script>
     function formatCardNumber(input) {
-      let value = input.value.replace(/[^0-9]/g, ""); // إزالة غير الأرقام
-      value = value.slice(0, 16); // 16 رقم فقط
-      let formatted = value.match(/.{1,4}/g); // تقسيم كل 4
+      let value = input.value.replace(/[^0-9]/g, "");
+      value = value.slice(0, 16);
+      let formatted = value.match(/.{1,4}/g);
       input.value = formatted ? formatted.join("-") : "";
     }
 
