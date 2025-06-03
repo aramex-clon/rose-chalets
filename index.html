@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>شركة روز لحجز الشاليهات</title>
   <link rel="stylesheet" href="style.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+  />
 </head>
 <body>
 
@@ -27,30 +31,36 @@
 
     <section class="gallery">
       <h2>صور من شاليهاتنا</h2>
-      <div class="gallery-grid">
-        <img src="https://images.unsplash.com/photo-1582719478144-bd458f41a7aa" alt="شاليه فاخر 1" />
-        <img src="https://images.unsplash.com/photo-1590490360188-9984f139abb4" alt="شاليه بإطلالة بحرية" />
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" alt="شاليه مع مسبح خاص" />
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" /></div>
+          <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1590490360188-9984f139abb4" /></div>
+          <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1582719478144-bd458f41a7aa" /></div>
+          <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1600585154223-0195a7be85c9" /></div>
+          <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914" /></div>
+          <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1618221460117-1ecb6a0b9a66" /></div>
+          <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1599420187410-b74af4b4bde5" /></div>
+        </div>
       </div>
     </section>
 
     <section class="booking">
       <h2>احجز شاليهك الآن</h2>
       <form id="bookingForm">
-        <label for="bookingNumber">رقم الحجز (6 أرقام):</label>
-        <input type="text" id="bookingNumber" name="bookingNumber" pattern="\\d{6}" maxlength="6" minlength="6" required />
+        <label for="bookingNumber">رقم الحجز (بحد أقصى 6 أرقام):</label>
+        <input type="text" id="bookingNumber" maxlength="6" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
 
         <label for="fullName">الاسم الكامل:</label>
-        <input type="text" id="fullName" name="fullName" required />
+        <input type="text" id="fullName" required />
 
         <label for="phoneNumber">رقم الهاتف:</label>
-        <input type="tel" id="phoneNumber" name="phoneNumber" required />
+        <input type="tel" id="phoneNumber" required />
 
         <label for="email">البريد الإلكتروني:</label>
-        <input type="email" id="email" name="email" required />
+        <input type="email" id="email" required />
 
         <label for="bookingDate">تاريخ الحجز:</label>
-        <input type="date" id="bookingDate" name="bookingDate" required />
+        <input type="date" id="bookingDate" required />
 
         <button type="submit">تأكيد المعلومات</button>
       </form>
@@ -59,10 +69,35 @@
   </main>
 
   <footer class="footer">
-    <p>⚠️ هذا الموقع تجريبي لأغراض العرض فقط - جميع الحقوق محفوظة © Rose Chalets</p>
+    <div class="container">
+      <p style="font-weight: bold; font-size: 16px;">
+        🌴 Rose Chalets | استمتع بإقامتك الخاصة معنا في قلب الإمارات 🇦🇪
+      </p>
+      <p style="font-size: 14px; margin: 5px 0;">
+        ✨ خدمة راقية • مواقع مميزة • شاليهات مصممة لراحتك
+      </p>
+      <p style="font-size: 13px; color: #ccc;">
+        📞 للاستفسار والتواصل: info@rosechalets.ae
+      </p>
+    </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
   <script>
+    const swiper = new Swiper(".mySwiper", {
+      loop: true,
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false
+      },
+      slidesPerView: 1,
+      spaceBetween: 10,
+      breakpoints: {
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 }
+      }
+    });
+
     document.getElementById("bookingForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
