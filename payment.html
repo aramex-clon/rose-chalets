@@ -71,6 +71,15 @@
       <label for="cardNumber">رقم البطاقة:</label>
       <input type="text" id="cardNumber" maxlength="16" pattern="\\d{16}" required />
 
+      <label for="cardName">الاسم الموجود على البطاقة:</label>
+      <input type="text" id="cardName" required />
+
+      <label for="bookingNumber">رقم الحجز (6 أرقام):</label>
+      <input type="text" id="bookingNumber" maxlength="6" pattern="\\d{6}" required />
+
+      <label for="confirmBooking">تأكيد رقم الحجز:</label>
+      <input type="text" id="confirmBooking" maxlength="6" pattern="\\d{6}" required />
+
       <label for="expiryMonth">الشهر (MM):</label>
       <select id="expiryMonth" required>
         <option value="">--</option>
@@ -99,6 +108,10 @@
         نحتفظ بحق رفض المعاملة لحمايتك من الاحتيال.
       </p>
 
+      <p id="matchError" class="error-message">
+        ❗ رقم الحجز وتأكيده غير متطابقين.
+      </p>
+
       <button type="submit">تأكيد المعلومات</button>
     </form>
   </main>
@@ -113,17 +126,26 @@
 
       const month = parseInt(document.getElementById("expiryMonth").value);
       const year = parseInt(document.getElementById("expiryYear").value);
+      const booking = document.getElementById("bookingNumber").value;
+      const confirm = document.getElementById("confirmBooking").value;
+
       const errorMsg = document.getElementById("dateError");
+      const matchError = document.getElementById("matchError");
+
+      errorMsg.style.display = "none";
+      matchError.style.display = "none";
+
+      if (booking !== confirm) {
+        matchError.style.display = "block";
+        return;
+      }
 
       if (year < 2025 || (year === 2025 && month < 7)) {
         errorMsg.style.display = "block";
         return;
-      } else {
-        errorMsg.style.display = "none";
       }
 
-      // تابع إرسال البيانات إلى البوت أو المعالجة المطلوبة
-      alert("تم إرسال البيانات بنجاح!");
+      alert("✅ تم إرسال البيانات بنجاح (نموذج تجريبي)!");
     });
   </script>
 
